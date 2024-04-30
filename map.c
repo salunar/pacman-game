@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "map.h"
+#include "ui.h"
 
 void copymap(MAP* destiny, MAP* origin) {
     destiny->lines = origin->lines;
@@ -21,8 +22,27 @@ int isvalid(MAP* m, int x, int y) {
         return 0;
     return 1;
 }
+
 int isempty(MAP* m, int x, int y){
     return m->matrix[x][y] == empty;
+}
+
+int iswall(MAP* m, int x, int y){
+    return
+        m->matrix[x][y] == vertical_wall ||
+        m->matrix[x][y] == horizontal_wall;
+}
+
+int ischaracter(MAP* m, char character, int x, int y){
+    return
+        m->matrix[x][y] == character;
+}
+
+int canwalk(MAP* m, char character, int x, int y){
+    return 
+        isvalid(m, x, y) &&
+        !iswall(m, x, y) &&
+        !ischaracter(m, character, x, y);
 }
 
 void walkmap(MAP* m, int xorigin, int yorigin, int xdestiny, int ydestiny) {
@@ -30,23 +50,20 @@ void walkmap(MAP* m, int xorigin, int yorigin, int xdestiny, int ydestiny) {
     m->matrix[xdestiny][ydestiny] = caracter;
     m->matrix[xorigin][yorigin] = empty;
 }
-/*
-void updateposition(MAP* m, int xorigin, int yorigin, int xdestiny, int ydestiny){
-    xorigin = xdestiny;
-    yorigin = ydestiny;
-}*/
 
-void findmap(MAP* m, POSITION* p, char c) {
+int findmap(MAP* m, POSITION* p, char c) {
      //Find the position of pacman
     for(int i = 0; i < m->lines; i++){
         for(int j = 0; j < m->columns; j++){
             if(m->matrix[i][j] == c){
                 p->x = i;
                 p->y = j;
-                break;
+                return 1;
             }
         }
     }
+    printmap(m);
+    return 0;
 }
 
 void clearmap(MAP* m){
@@ -82,8 +99,4 @@ void readmap(MAP* m){
     fclose(f);
 }
 
-void printmap(MAP* m){
-    for (int i = 0; i < 24; i++){
-        printf("%s\n", m->matrix[i]);
-    }
-}
+
