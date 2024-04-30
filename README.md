@@ -17,5 +17,5 @@ This is a simple game, produced with the aim of practicing, improving and mainly
       * [Combo](#combo)
    * [Tests](#testes)
    * [Tecnologias](#tecnologias)
-<!--te-->
+<!--te--> 
 
