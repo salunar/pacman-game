@@ -3,9 +3,18 @@
 #include <time.h>
 #include "pacman.h"
 #include "map.h"
+#include "ui.h"
 
 MAP m;
 POSITION hero;
+
+int havepill = 0;
+
+int updateposition(int* xorigin, int* yorigin, int xdestiny, int ydestiny){
+    *xorigin = xdestiny;
+    *yorigin = ydestiny;
+    return 1;
+}
 
 int findway(int xactual, int yactual, int* xdestiny, int* ydestiny) {
     int options [4][2] = {
@@ -17,8 +26,7 @@ int findway(int xactual, int yactual, int* xdestiny, int* ydestiny) {
     srand(time(0));
     for(int i = 0; i < 10; i++){
         int position1 = rand () % 4;
-        if(isvalid(&m, options[position1][0], options[position1][1]) && 
-        isempty(&m, options[position1][0], options[position1][1])){
+        if(canwalk(&m, GHOST, options[position1][0], options[position1][1])){
             *xdestiny = options[position1][0];
             *ydestiny = options[position1][1];
             return 1;
@@ -26,7 +34,6 @@ int findway(int xactual, int yactual, int* xdestiny, int* ydestiny) {
     }
     return 0;
 }
-
 
 void ghost(){
     MAP copy;
@@ -45,11 +52,13 @@ void ghost(){
             }
         }
     }
-    clearmap(&copy);
+    clearmap(&copy);    
 }
 
 int finished() {
-    return 0;
+    POSITION pos;
+    int pacmaminmap = findmap(&m, &pos, HERO);
+    return !pacmaminmap;
 }
 
 int isdirection(char direction){
@@ -81,27 +90,44 @@ void move(char direction) {
             nexty++;
             break;
     }
-    if(!isvalid(&m, nextx, nexty))
+    if(!canwalk(&m, HERO, nextx, nexty))
         return;
-    
-    if(!isempty(&m, nextx, nexty))
-        return;
-    
+    if(ischaracter(&m, PILL, nextx, nexty)){
+        havepill = 1;
+    }
     walkmap(&m, hero.x, hero.y, nextx, nexty);
-    
-    hero.x = nextx;
-    hero.y = nexty;
-
+    updateposition(&hero.x, &hero.y, nextx, nexty);
 }
+void pillexplodes1(){
+    if(!havepill) return;
+    pillexplodes2(hero.x, hero.y, -1, 0, 3);
+    pillexplodes2(hero.x, hero.y, +1, 0, 3);
+    pillexplodes2(hero.x, hero.y, 0, -1, 3);
+    pillexplodes2(hero.x, hero.y, 0, +1, 3);
+    havepill = 0;
+}
+void pillexplodes2(int x, int y, int sumx, int sumy, int amount){
+    if(amount == 0) return;
+    int newx = x + sumx;
+    int newy = y + sumy;
+    
+    if(!isvalid(&m, newx, newy)) return;
+    if(iswall(&m, newx, newy)) return;
+    m.matrix[newx][newy] = empty;
+    pillexplodes2(newx, newy, sumx, sumy, amount - 1);
+}
+    
 int main(){
     readmap(&m);
     findmap(&m, &hero, HERO);    
     
     do {
+        printf("Tem pilula? %s\n", (havepill ? "YES" : "NO"));
         printmap(&m);
         char command;
         scanf(" %c", &command);
         move(command);
+        if(command == BOMB) pillexplodes1();
         ghost();
     }while(!finished());
     
