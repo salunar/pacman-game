@@ -2,9 +2,9 @@
 #define _MAP_H_
 #define HERO '@'
 #define GHOST 'A'
-#define empty '.'
-#define vertical_wall '|'
-#define horizontal_wall '-'
+#define EMPTY '.'
+#define VERTICAL_WALL '|'
+#define HORIZONTAL_WALL '-'
 #define PILL 'o'
 
 struct map {

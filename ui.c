@@ -20,7 +20,7 @@ char desingghost[4][7] = {
 char desinghero[4][7] = {
     {" .--. "},
     {"/ _.-'"},
-    {"\\ '-."},
+    {"\\ '-. "},
     {" '--' "}
 };
 
@@ -55,11 +55,11 @@ void printmap(MAP* m){
                     case PILL:
                         printpart(desingpill, part);
                         break;
-                    case horizontal_wall:
-                    case vertical_wall:
+                    case HORIZONTAL_WALL:
+                    case VERTICAL_WALL:
                         printpart(desingwall, part);
                         break;
-                    case empty:
+                    case EMPTY:
                         printpart(desingempty, part);
                         break;
                 }       

@@ -24,13 +24,13 @@ int isvalid(MAP* m, int x, int y) {
 }
 
 int isempty(MAP* m, int x, int y){
-    return m->matrix[x][y] == empty;
+    return m->matrix[x][y] == EMPTY;
 }
 
 int iswall(MAP* m, int x, int y){
     return
-        m->matrix[x][y] == vertical_wall ||
-        m->matrix[x][y] == horizontal_wall;
+        m->matrix[x][y] == VERTICAL_WALL ||
+        m->matrix[x][y] == HORIZONTAL_WALL;
 }
 
 int ischaracter(MAP* m, char character, int x, int y){
@@ -48,7 +48,7 @@ int canwalk(MAP* m, char character, int x, int y){
 void walkmap(MAP* m, int xorigin, int yorigin, int xdestiny, int ydestiny) {
     char caracter = m->matrix[xorigin][yorigin];
     m->matrix[xdestiny][ydestiny] = caracter;
-    m->matrix[xorigin][yorigin] = empty;
+    m->matrix[xorigin][yorigin] = EMPTY;
 }
 
 int findmap(MAP* m, POSITION* p, char c) {
@@ -82,7 +82,7 @@ void allocatemap(MAP* m){
 
 void readmap(MAP* m){
      FILE* f;
-    f = fopen("map2.txt", "r");
+    f = fopen("map3.txt", "r");
     if(f == 0){
         printf("Error reading the map!\n");
         exit(1);

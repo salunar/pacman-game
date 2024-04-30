@@ -77,16 +77,16 @@ void move(char direction) {
     int nexty = hero.y;
     
     switch(direction){ 
-        case up:
+        case UP:
             nextx--;
             break;
-        case left:
+        case LEFT:
             nexty--;
             break;
-        case down:
+        case DOWN:
             nextx++;
             break;
-        case right:
+        case RIGHT:
             nexty++;
             break;
     }
@@ -113,18 +113,18 @@ void pillexplodes2(int x, int y, int sumx, int sumy, int amount){
     
     if(!isvalid(&m, newx, newy)) return;
     if(iswall(&m, newx, newy)) return;
-    m.matrix[newx][newy] = empty;
+    m.matrix[newx][newy] = EMPTY;
     pillexplodes2(newx, newy, sumx, sumy, amount - 1);
 }
     
 int main(){
     readmap(&m);
     findmap(&m, &hero, HERO);    
-    
+    int h = 0;
     do {
         printf("Tem pilula? %s\n", (havepill ? "YES" : "NO"));
         printmap(&m);
-        char command;
+        char command;   
         scanf(" %c", &command);
         move(command);
         if(command == BOMB) pillexplodes1();
@@ -132,4 +132,5 @@ int main(){
     }while(!finished());
     
     clearmap(&m);
+
 }

@@ -1,9 +1,9 @@
 #ifndef _PACMAN_H_
 #define _PACMAN_H_
-#define up 'w'
-#define down 's'
-#define left 'a'
-#define right 'd'
+#define UP 'w'
+#define DOWN 's'
+#define LEFT 'a'
+#define RIGHT 'd'
 #define BOMB 'b'
 
 void move (char direction);
