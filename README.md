@@ -7,8 +7,8 @@ This is a simple game, produced with the aim of practicing, improving and mainly
 <!--ts-->
    * [Download](#Download)
    * [Usage](#Usage)
-   * [Game Mode](#Game Mode)
-   * [Requirement](#Requirement
+   * [Game Mode](#GameMode)
+   * [Requirement](#Requirement)
 <!--te--> 
 
 Download
