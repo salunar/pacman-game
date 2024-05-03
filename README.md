@@ -1,7 +1,7 @@
 # PAC-MAN (or almost)
 ![GitHub language count](https://img.shields.io/github/languages/count/salunar/pacman-game?style=plastic)
 
-## A simple Pac-Mangame
+## A simple Pac-Man game
 This is a simple game, produced with the aim of practicing, improving and mainly demonstrating my knowledge in C.
 
 <!--ts-->
