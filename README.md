@@ -34,5 +34,5 @@ Requirement
 ===========
 
 If the .exe file does not work, you will need to recompile the program, and to do so, download the MinGW compiler (gcc).
-*[Download GCC compiler](https://sourceforge.net/projects/mingw/files/latest/download)
+* [Download GCC compiler](https://sourceforge.net/projects/mingw/files/latest/download)
   
